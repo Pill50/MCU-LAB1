@@ -112,15 +112,20 @@ int main(void)
                   | GPIO_PIN_15,  SET);
   }
 
-  void setNumberOnClock(int num) {
-      HAL_GPIO_WritePin(GPIOA, ledPin[num], RESET);
+  void setNumberOnClock (int num ) {
+      HAL_GPIO_WritePin (GPIOA, ledPin[num], RESET);
+  }
+
+  void clearNumberOnClock (int num ) {
+      HAL_GPIO_WritePin (GPIOA, ledPin[num], SET);
   }
 
   int n = 0;
   while (1) {
 	  clearAllClock();
       testLed(n);
-	  setNumberOnClock(4);
+      setNumberOnClock(4);
+      clearNumberOnClock(2);
       n++;
       if(n >= 12) n = 0;
       HAL_Delay(1000);
