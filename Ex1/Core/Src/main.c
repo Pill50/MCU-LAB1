@@ -112,17 +112,33 @@ int main(void)
                   | GPIO_PIN_15,  SET);
   }
 
-  void setNumberOnClock(int num) {
-      HAL_GPIO_WritePin(GPIOA, ledPin[num], RESET);
+  void setNumberOnClock (int num ) {
+      HAL_GPIO_WritePin (GPIOA, ledPin[num], RESET);
   }
 
-  int n = 0;
+  void clearNumberOnClock (int num ) {
+      HAL_GPIO_WritePin (GPIOA, ledPin[num], SET);
+  }
+
+  int hour = 0, minute = 0, second = 0;
   while (1) {
-	  clearAllClock();
-      testLed(n);
-	  setNumberOnClock(4);
-      n++;
-      if(n >= 12) n = 0;
+      if(second == 60) {
+          second = 0;
+          minute++;
+      }
+      if(minute == 60) {
+          minute = 0;
+          second = 0;
+          hour++;
+      }
+      if(hour == 24) {
+          hour = 0;
+      }
+      clearAllClock();
+      setNumberOnClock(hour);
+      setNumberOnClock(minute/5);
+      setNumberOnClock(second/5);
+      second++;
       HAL_Delay(1000);
   }
     /* USER CODE BEGIN 3 */
